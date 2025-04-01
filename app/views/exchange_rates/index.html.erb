@@ -1,0 +1,72 @@
+<!-- filepath: d:\pt\maybe\app\views\exchange_rates\index.html.erb -->
+<%
+  header_title t(".title", default: "Exchange Rates")
+  header_description t(".description", default: "View and filter exchange rates.")
+%>
+
+<% content_for :sidebar do %>
+  <%= render "settings/nav" %>
+<% end %>
+<nav>
+  <ul>
+    <!-- ...existing links... -->
+    <li>
+      <%= link_to t("exchange_rates.menu", default: "Exchange Rates"), exchange_rates_path, class: "text-primary hover:text-gray-700" %>
+    </li>
+  </ul>
+</nav>
+<div class="space-y-4">
+  <h1 class="text-primary text-xl font-medium mb-4"><%= t(".page_title", default: "Exchange Rates") %></h1>
+
+  <%= styled_form_with url: exchange_rates_path, method: :get, class: "space-y-4" do |f| %>
+    <div class="grid grid-cols-2 gap-4">
+      <%= f.text_field :from_currency,
+        required: true,
+        label: t(".from_currency_label", default: "From Currency"),
+        placeholder: t(".from_currency_placeholder", default: "e.g., USD") %>
+
+      <%= f.text_field :to_currency,
+        required: true,
+        label: t(".to_currency_label", default: "To Currency"),
+        placeholder: t(".to_currency_placeholder", default: "e.g., EUR") %>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <%= f.date_field :start_date,
+        label: t(".start_date_label", default: "Start Date"),
+        value: @start_date %>
+
+      <%= f.date_field :end_date,
+        label: t(".end_date_label", default: "End Date"),
+        value: @end_date %>
+    </div>
+
+    <div class="flex justify-end">
+      <%= f.submit t(".filter_button", default: "Filter"), class: "bg-gray-900 hover:bg-gray-700 cursor-pointer text-white rounded-lg px-3 py-2" %>
+    </div>
+  <% end %>
+
+  <% if @exchange_rates.any? %>
+    <div class="mt-6">
+      <h2 class="text-lg font-medium text-primary"><%= t(".results_title", default: "Exchange Rates") %></h2>
+      <table class="table-auto w-full mt-4 border-collapse border border-gray-200">
+        <thead>
+          <tr class="bg-gray-100">
+            <th class="border border-gray-300 px-4 py-2 text-left"><%= t(".date", default: "Date") %></th>
+            <th class="border border-gray-300 px-4 py-2 text-left"><%= t(".rate", default: "Rate") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @exchange_rates.each do |rate| %>
+            <tr>
+              <td class="border border-gray-300 px-4 py-2"><%= rate.date %></td>
+              <td class="border border-gray-300 px-4 py-2"><%= rate.rate %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p class="text-secondary mt-6"><%= t(".no_results", default: "No exchange rates found for the selected criteria.") %></p>
+  <% end %>
+</div>

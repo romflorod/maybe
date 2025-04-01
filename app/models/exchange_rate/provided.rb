@@ -21,7 +21,7 @@ module ExchangeRate::Provided
 
         if response.success?
           response.rates.map do |exchange_rate|
-            rate = ExchangeRate.new \
+            rate = HistoricalExchangeRate.new \
               from_currency: from,
               to_currency: to,
               date: exchange_rate.dig(:date).to_date,

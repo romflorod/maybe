@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  from_currency: MyString
+  to_currency: MyString
+  rate: 9.99
+  date: 2025-04-01
+
+two:
+  from_currency: MyString
+  to_currency: MyString
+  rate: 9.99
+  date: 2025-04-01

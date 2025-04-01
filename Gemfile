@@ -85,3 +85,5 @@ group :test do
   gem "climate_control"
   gem "simplecov", require: false
 end
+
+gem 'whenever'
